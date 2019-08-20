@@ -1,8 +1,14 @@
-# beets-config
+# beets-config ----------------------------------------------------------------------
 # https://github.com/bretthabel/beets-config/blob/master/config.yaml
+# beets version 1.4.x
+# python version 3.7.x
+# brett habel 20/08/2019
 
-# library: /mnt/storage-1/music/library.db
-directory: /mnt/storage-1/music
+# Library----------------------------------------------------------------------
+library: /library.db
+directory: /
+
+# Importing----------------------------------------------------------------------
 
 import:
     # write metadata to music files
@@ -10,58 +16,23 @@ import:
 
     # move imported files from source to the music directory
     move: yes
-    copy: no
-    delete: no
-    link: no
-    hardlink: no
+    copy: yes
 
     # use auto-tagging where possible
     autotag: yes
 
-    # do not require confirmation on strong matches
-    timid: no
-
+    # require confirmation even on strong matches
+    timid: yes
+    
+    # miscellaneous
     resume: ask
-    incremental: no
-    incremental_skip_later: no
-    from_scratch: no
-    none_rec_action: ask
-    log:
-
-    quiet: no  # enable with command line option
-    quiet_fallback: skip
-    default_action: apply
-
-    singletons: no
-    languages: []
-    detail: no
-    flat: no
-    group_albums: no
-    duplicate_action: ask
-    bell: no
-    set_fields: {}
-
-# use the release-date of the original (first) release of an album?
-original_date: no
-
-# Use the artist credit, rather than the artist.
-artist_credit: no
-
-# Enable this option to instead use the older ID3v2.3 standard.
-id3v23: no
-
-#Sets the albumartist for various-artist compilations.
-va_name: "Various Artists"
-
-# on multi-disk releases, assign track numbers for the whole album.
-# if "per disk", make sure tracknames do not collide ("paths" setting).
-per_disc_numbering: no
+    quiet: no
+    
+    #logging
+    log: beetslog.log
 
 # files matching these patterns are deleted from source after import
 clutter: ["Thumbs.DB", ".DS_Store", "*.m3u", ".pls"]
-
-# files/directories matching one of these patterns are ignored during import
-ignore: [".*", "*~", "System Volume Information", "lost+found"]
 
 # whether to ignore hidden files when importing.
 # files (and directories) starting with a dot are detected as hidden files.
@@ -70,8 +41,8 @@ ignore_hidden: yes
 
 # Paths ----------------------------------------------------------------------
 
-# Paths and filenames for music files relative to music directory
-# Output format: Shellac > 1000 Hurts (2000) (FLAC 16-44) [TG211] > 01 - Prayer To God.flac
+# paths and filenames for music files relative to music directory
+# output example: Shellac / 1000 Hurts (2000) (FLAC 16-44) [TG211] / 01 - Prayer To God.flac
 paths:
     default: $albumartist/$album (%if{$original_year,$original_year}) %aunique{albumartist album year, albumtype label catalognum albumdisambig}%if{$albumdisambig,($albumdisambig $year)} %if{$is_flac,($format $bitdepth-$my_samplerate),($format $av_bitrate)} [$catalognum]/%if{$multidisc,$disc-}/$track - $title
 
@@ -86,34 +57,13 @@ replace:
     '^\s+': ''
     '^-': _
 
-path_sep_replace: _
-
-# Convert all non-ASCII characters in paths to ASCII equivalents.
-asciify_paths: false
-
-# filename for the album art
-art_filename: cover  # results in "cover.jpg"
-
-max_filename_length: 0  # unlimited
-
-overwrite_null:
-  album: []
-  track: []
-
-
-# General --------------------------------------------------------------------
-
-# use mutliple threads during import
-threaded: yes
-timeout: 5.0
-verbose: no
+# convert all non-ASCII characters in paths to ASCII equivalents.
+asciify_paths: yes
 
 
 # User Interface -------------------------------------------------------------
 
 ui:
-    terminal_width: 80
-    length_diff_thresh: 10.0
     color: yes
     colors:
         text_success: green
@@ -123,18 +73,7 @@ ui:
         text_highlight_minor: lightgray
         action_default: turquoise
         action: blue
-
-# Format to use when listing items with the list command.
-format_item: $artist - $album - $title
-format_album: $albumartist - $album
-time_format: '%Y-%m-%d %H:%M:%S'
-format_raw_length: no
-
-# Default sort order to use when fetching albums from the database.
-sort_album: albumartist+ album+
-sort_item: artist+ album+ disc+ track+
-sort_case_insensitive: yes
-
+        
 
 # Auto Tagger ----------------------------------------------------------------
 
@@ -167,80 +106,45 @@ match:
         track_id: 5.0
     preferred:
         countries: []
-        media: []
+        media: ['CD', 'Digital Media|File', 'Vinyl']
         original_year: no
-    ignored: []
-    required: []
+    ignored: [missing_tracks unmatched_tracks]
+    required: [year label catalognum country]
     ignored_media: ['Data CD', 'DVD', 'DVD-Video', 'Blu-ray', 'HD-DVD','VCD', 'SVCD', 'UMD', 'VHS']
-    ignore_data_tracks: yes
-    ignore_video_tracks: yes
-    track_length_grace: 10
-    track_length_max: 30
-
+    
 
 # Plugins --------------------------------------------------------------------
 
-plugins: discogs inline fetchart lastgenre scrub mbsync mpdupdate musicbrainz missing
+plugins: discogs inline fetchart lastgenre scrub
 pluginpath: []
 
 
 # Plugins Config -------------------------------------------------------------
 
-lyrics:
+fetchart:
     auto: yes
-    fallback: ''
+    minwidth: 750
+    maxwidth: 2000
+    enforce_ratio: yes
+    sources: coverart itunes amazon albumart filesystem google
 
 lastgenre:
     whitelist: ~/.config/beets/genres.txt
     canoncical: ~/.config/beets/genres-tree.yaml
     fallback: ''
     source: artist
-
-fetchart:
-    auto: yes # default
-    minwidth: 750
-    maxwidth: 2000
-    enforce_ratio: yes
-    sources: coverart itunes amazon albumart filesystem
-
-replaygain:
-    auto: yes
-    overwrite: yes
-    albumgain: yes
-
+    
 scrub:
     auto: yes
+    
+    
+# Miscellaneous -------------------------------------------------------------
 
-# required for mpdstats
-mpd:
-    host: localhost
-    port: 6600
-    password:  # none
-
-mpdstats:
-    rating: False
-    # two ratings are calculated:
-    # "rolling" based on recent development
-    # "stable" based on all-time development
-    # rating mix 0.0 is all "rolling", 1.0 is all "stable"
-    rating_mix: 0.75
-
-musicbrainz:
-    host: musicbrainz.org
-    ratelimit: 1
-    ratelimit_interval: 1.0
-    searchlimit: 5
-
-missing:
-    format: $albumartist - $album - $title
-    count: no
-    total: no
-
- item_fields:
+item_fields:
     my_samplerate: round(samplerate / 1000)
     is_flac: 1 if format == "FLAC" else 0
     multidisc: 1 if disctotal > 1 else 0
-  album_fields:  
+ album_fields:  
     format: |
          formatList = []
          for item in items:
