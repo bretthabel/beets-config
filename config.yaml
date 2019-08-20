@@ -1,0 +1,253 @@
+# beets-config
+# http://
+
+# library: /mnt/storage-1/music/library.db
+directory: /mnt/storage-1/music
+
+import:
+    # write metadata to music files
+    write: yes
+
+    # move imported files from source to the music directory
+    move: yes
+    copy: no
+    delete: no
+    link: no
+    hardlink: no
+
+    # use auto-tagging where possible
+    autotag: yes
+
+    # do not require confirmation on strong matches
+    timid: no
+
+    resume: ask
+    incremental: no
+    incremental_skip_later: no
+    from_scratch: no
+    none_rec_action: ask
+    log:
+
+    quiet: no  # enable with command line option
+    quiet_fallback: skip
+    default_action: apply
+
+    singletons: no
+    languages: []
+    detail: no
+    flat: no
+    group_albums: no
+    duplicate_action: ask
+    bell: no
+    set_fields: {}
+
+# use the release-date of the original (first) release of an album?
+original_date: no
+
+# Use the artist credit, rather than the artist.
+artist_credit: no
+
+# Enable this option to instead use the older ID3v2.3 standard.
+id3v23: no
+
+#Sets the albumartist for various-artist compilations.
+va_name: "Various Artists"
+
+# on multi-disk releases, assign track numbers for the whole album.
+# if "per disk", make sure tracknames do not collide ("paths" setting).
+per_disc_numbering: no
+
+# files matching these patterns are deleted from source after import
+clutter: ["Thumbs.DB", ".DS_Store", "*.m3u", ".pls"]
+
+# files/directories matching one of these patterns are ignored during import
+ignore: [".*", "*~", "System Volume Information", "lost+found"]
+
+# whether to ignore hidden files when importing.
+# files (and directories) starting with a dot are detected as hidden files.
+ignore_hidden: yes
+
+
+# Paths ----------------------------------------------------------------------
+
+# Paths and filenames for music files relative to music directory
+# Output format: Shellac > 1000 Hurts (2000) (FLAC 16-44) [TG211] > 01 - Prayer To God.flac
+paths:
+    default: $albumartist/$album (%if{$original_year,$original_year}) %aunique{albumartist album year, albumtype label catalognum albumdisambig}%if{$albumdisambig,($albumdisambig $year)} %if{$is_flac,($format $bitdepth-$my_samplerate),($format $av_bitrate)} [$catalognum]/%if{$multidisc,$disc-}/$track - $title
+
+# replace special characters in generated filenames
+replace:
+    '[\\/]': _
+    '^\.': _
+    '[\x00-\x1f]': _
+    '[<>:"\?\*\|]': _
+    '\.$': _
+    '\s+$': ''
+    '^\s+': ''
+    '^-': _
+
+path_sep_replace: _
+
+# Convert all non-ASCII characters in paths to ASCII equivalents.
+asciify_paths: false
+
+# filename for the album art
+art_filename: cover  # results in "cover.jpg"
+
+max_filename_length: 0  # unlimited
+
+overwrite_null:
+  album: []
+  track: []
+
+
+# General --------------------------------------------------------------------
+
+# use mutliple threads during import
+threaded: yes
+timeout: 5.0
+verbose: no
+
+
+# User Interface -------------------------------------------------------------
+
+ui:
+    terminal_width: 80
+    length_diff_thresh: 10.0
+    color: yes
+    colors:
+        text_success: green
+        text_warning: yellow
+        text_error: red
+        text_highlight: red
+        text_highlight_minor: lightgray
+        action_default: turquoise
+        action: blue
+
+# Format to use when listing items with the list command.
+format_item: $artist - $album - $title
+format_album: $albumartist - $album
+time_format: '%Y-%m-%d %H:%M:%S'
+format_raw_length: no
+
+# Default sort order to use when fetching albums from the database.
+sort_album: albumartist+ album+
+sort_item: artist+ album+ disc+ track+
+sort_case_insensitive: yes
+
+
+# Auto Tagger ----------------------------------------------------------------
+
+match:
+    strong_rec_thresh: 0.04
+    medium_rec_thresh: 0.25
+    rec_gap_thresh: 0.25
+    max_rec:
+        missing_tracks: medium
+        unmatched_tracks: medium
+    distance_weights:
+        source: 2.0
+        artist: 3.0
+        album: 3.0
+        media: 1.0
+        mediums: 1.0
+        year: 1.0
+        country: 0.5
+        label: 0.5
+        catalognum: 0.5
+        albumdisambig: 0.5
+        album_id: 5.0
+        tracks: 2.0
+        missing_tracks: 0.9
+        unmatched_tracks: 0.6
+        track_title: 3.0
+        track_artist: 2.0
+        track_index: 1.0
+        track_length: 2.0
+        track_id: 5.0
+    preferred:
+        countries: []
+        media: []
+        original_year: no
+    ignored: []
+    required: []
+    ignored_media: ['Data CD', 'DVD', 'DVD-Video', 'Blu-ray', 'HD-DVD','VCD', 'SVCD', 'UMD', 'VHS']
+    ignore_data_tracks: yes
+    ignore_video_tracks: yes
+    track_length_grace: 10
+    track_length_max: 30
+
+
+# Plugins --------------------------------------------------------------------
+
+plugins: discogs inline fetchart lastgenre scrub mbsync mpdupdate musicbrainz missing
+pluginpath: []
+
+
+# Plugins Config -------------------------------------------------------------
+
+lyrics:
+    auto: yes
+    fallback: ''
+
+lastgenre:
+    whitelist: ~/.config/beets/genres.txt
+    canoncical: ~/.config/beets/genres-tree.yaml
+    fallback: ''
+    source: artist
+
+fetchart:
+    auto: yes # default
+    minwidth: 750
+    maxwidth: 2000
+    enforce_ratio: yes
+    sources: coverart itunes amazon albumart filesystem
+
+replaygain:
+    auto: yes
+    overwrite: yes
+    albumgain: yes
+
+scrub:
+    auto: yes
+
+# required for mpdstats
+mpd:
+    host: localhost
+    port: 6600
+    password:  # none
+
+mpdstats:
+    rating: False
+    # two ratings are calculated:
+    # "rolling" based on recent development
+    # "stable" based on all-time development
+    # rating mix 0.0 is all "rolling", 1.0 is all "stable"
+    rating_mix: 0.75
+
+musicbrainz:
+    host: musicbrainz.org
+    ratelimit: 1
+    ratelimit_interval: 1.0
+    searchlimit: 5
+
+missing:
+    format: $albumartist - $album - $title
+    count: no
+    total: no
+
+ item_fields:
+    my_samplerate: round(samplerate / 1000)
+    is_flac: 1 if format == "FLAC" else 0
+    multidisc: 1 if disctotal > 1 else 0
+  album_fields:  
+    format: |
+         formatList = []
+         for item in items:
+             formatList.append(item.format)
+         return formatList
+    av_bitrate: |
+         total = 0
+         for item in items:
+             total += item.bitrate
+         return round(total / len(items) / 1000)
