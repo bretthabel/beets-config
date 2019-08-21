@@ -34,6 +34,9 @@ import:
 # files matching these patterns are deleted from source after import
 clutter: ["Thumbs.DB", ".DS_Store", "*.m3u", ".pls"]
 
+# include
+include: [log cue]
+
 # whether to ignore hidden files when importing.
 # files (and directories) starting with a dot are detected as hidden files.
 ignore_hidden: yes
