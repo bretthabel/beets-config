@@ -1,12 +1,12 @@
 # beets-config ----------------------------------------------------------------------
 # https://github.com/bretthabel/beets-config/blob/master/config.yaml
-# beets version 1.4.x
-# python version 3.7.x
+# beets version 1.4.9
+# python version 3.7.3
 # brett habel 20/08/2019
 
 # Library----------------------------------------------------------------------
-library: /library.db
-directory: /
+#library: /library.db
+directory: /Users/bretthabel/Library/Containers/nz.co.pixeleyes.AutoMounter/Data/Mounts/monoNAS/SMB/Music
 
 # Importing----------------------------------------------------------------------
 
@@ -108,32 +108,19 @@ match:
         countries: []
         media: ['CD', 'Digital Media|File', 'Vinyl']
         original_year: no
-    ignored: [missing_tracks unmatched_tracks]
-    required: [year label catalognum country]
+    ignored: []
+    required: []
     ignored_media: ['Data CD', 'DVD', 'DVD-Video', 'Blu-ray', 'HD-DVD','VCD', 'SVCD', 'UMD', 'VHS']
     
 
 # Plugins --------------------------------------------------------------------
 
-plugins: discogs inline fetchart lastgenre scrub
+plugins: discogs inline scrub
 pluginpath: []
 
 
 # Plugins Config -------------------------------------------------------------
 
-fetchart:
-    auto: yes
-    minwidth: 750
-    maxwidth: 2000
-    enforce_ratio: yes
-    sources: coverart itunes amazon albumart filesystem google
-
-lastgenre:
-    whitelist: ~/.config/beets/genres.txt
-    canoncical: ~/.config/beets/genres-tree.yaml
-    fallback: ''
-    source: artist
-    
 scrub:
     auto: yes
     
@@ -144,7 +131,7 @@ item_fields:
     my_samplerate: round(samplerate / 1000)
     is_flac: 1 if format == "FLAC" else 0
     multidisc: 1 if disctotal > 1 else 0
- album_fields:  
+album_fields:  
     format: |
          formatList = []
          for item in items:
