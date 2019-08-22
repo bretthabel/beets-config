@@ -43,8 +43,8 @@ ignore_hidden: yes
 # Paths ----------------------------------------------------------------------
 
 # paths and filenames for music files relative to music directory
-# output example: Shellac / 1000 Hurts (2000) [FLAC 16-44] [TG211CD] / 01 - Prayer To God.flac
-# output example: Shellac / 1000 Hurts (2000) [FLAC 24-96] [Vinyl] [TG211] / 01 - Prayer To God.flac
+# output example: Shellac / 1000 Hurts (2000) [FLAC CD 16-44] [TG211CD] / 01 - Prayer To God.flac
+# output example: Shellac / 1000 Hurts (2000) [FLAC Vinyl 24-96] [TG211] / 01 - Prayer To God.flac
 paths:
     default: $albumartist/$album (%if{$original_year,$original_year}) %aunique{albumartist album year, albumtype label catalognum albumdisambig}%if{$albumdisambig,($albumdisambig $year)} %if{$is_flac,[$format $media $bitdepth-$my_samplerate],[$format $av_bitrate]} [$catalognum]/%if{$multidisc,$disc-}/$track - $title
     
@@ -145,7 +145,7 @@ copyartifacts:
 # Miscellaneous -------------------------------------------------------------
 
 item_fields:
-    my_samplerate: round(samplerate / 1000)
+    my_samplerate: round(samplerate / 10000)
     is_flac: 1 if format == "FLAC" else 0
     multidisc: 1 if disctotal > 1 else 0
     
