@@ -45,7 +45,8 @@ ignore_hidden: yes
 # Paths ----------------------------------------------------------------------
 
 # paths and filenames for music files relative to music directory
-# output example: Shellac / 1000 Hurts (2000) [FLAC 16-44] [TG211] / 01 - Prayer To God.flac
+# output example: Shellac / 1000 Hurts (2000) [FLAC 16-44] [TG211CD] / 01 - Prayer To God.flac
+# output example: Shellac / 1000 Hurts (2000) [FLAC 24-96] [Vinyl] [TG211] / 01 - Prayer To God.flac
 paths:
     default: $albumartist/$album (%if{$original_year,$original_year}) %aunique{albumartist album year, albumtype label catalognum albumdisambig}%if{$albumdisambig,($albumdisambig $year)} %if{$is_flac,[$format $bitdepth-$my_samplerate],[$format $av_bitrate]} %if{$vinyl,[Vinyl]} [$catalognum]/%if{$multidisc,$disc-}/$track - $title
     ext:log: $artist - $album
