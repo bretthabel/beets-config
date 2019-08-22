@@ -136,6 +136,7 @@ fetchart:
 scrub:
     auto: yes
     
+# https://github.com/sbarakat/beets-copyartifacts
 copyartifacts:
     extensions: .cue .log
     print_ignored: yes
