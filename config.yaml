@@ -3,6 +3,7 @@
 # beets version 1.4.9
 # python version 3.7.3
 # brett habel 20190822
+# update dependancies by: pip install -U beets[fetchart,discogs,import]
 
 # Library----------------------------------------------------------------------
 #library: /library.db
