@@ -145,7 +145,7 @@ copyartifacts:
 # Miscellaneous -------------------------------------------------------------
 
 item_fields:
-    my_samplerate: round(samplerate / 10000)
+    my_samplerate: samplerate / 1000
     is_flac: 1 if format == "FLAC" else 0
     multidisc: 1 if disctotal > 1 else 0
     
