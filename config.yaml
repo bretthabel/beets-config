@@ -118,7 +118,7 @@ match:
 
 # Plugins --------------------------------------------------------------------
 
-plugins: discogs inline fetchart scrub
+plugins: discogs inline copyartifacts fetchart scrub
 pluginpath: []
 
 
@@ -133,6 +133,10 @@ fetchart:
     
 scrub:
     auto: yes
+    
+copyartifacts:
+    extensions: .cue .log
+    print_ignored: yes
     
     
 # Miscellaneous -------------------------------------------------------------
