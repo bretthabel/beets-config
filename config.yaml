@@ -145,7 +145,7 @@ copyartifacts:
 # Miscellaneous -------------------------------------------------------------
 
 item_fields:
-    my_samplerate: round(samplerate / 1000)
+    my_samplerate: str(int(samplerate / 1000))
     multidisc: 1 if disctotal > 1 else 0
     
 album_fields:  
