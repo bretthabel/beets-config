@@ -120,7 +120,7 @@ match:
 
 # Plugins --------------------------------------------------------------------
 
-plugins: discogs inline copyartifacts fetchart scrub
+plugins: discogs inline extrafiles fetchart scrub #copyartifacts
 pluginpath: []
 
 
@@ -137,9 +137,22 @@ scrub:
     auto: yes
     
 # https://github.com/sbarakat/beets-copyartifacts
-copyartifacts:
-    extensions: .cue .log .txt .jpg
-    print_ignored: yes
+#copyartifacts:
+#    extensions: .cue .log .txt
+#    print_ignored: yes
+    
+# https://pypi.org/project/beets-extrafiles/
+extrafiles:
+    patterns:
+        all: '*.*'
+        artworkdir:
+          - '[sS]cans/'
+          - '[aA]rtwork/'
+          - '[aA]rt/'
+    paths:
+        artworkdir: $albumpath/Artwork
+        ext:log: $albumpath/Data/
+        ext:cue: $albumpath/Data/
 
     
 # Miscellaneous -------------------------------------------------------------
