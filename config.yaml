@@ -5,11 +5,11 @@
 # brett habel 20190827
 # update dependancies: pip install -U beets[fetchart,discogs,import]
 
-# Library----------------------------------------------------------------------
+# Library----------------------------------------------------------------------------
 #library: /library.db
 directory: /Users/bretthabel/Library/Containers/nz.co.pixeleyes.AutoMounter/Data/Mounts/monoNAS/SMB/Music
 
-# Importing----------------------------------------------------------------------
+# Importing--------------------------------------------------------------------------
 
 import:
     # write metadata to music files
