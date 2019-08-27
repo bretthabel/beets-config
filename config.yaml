@@ -47,9 +47,9 @@ ignore_hidden: yes
 # output example: Shellac / 1000 Hurts (2000) [FLAC Vinyl 24-96] [TG211] / 01 - Prayer To God.flac
 paths:
     default: $albumartist/$album (%if{$original_year,$original_year}) %aunique{albumartist album year, albumtype label catalognum albumdisambig}%if{$albumdisambig,($albumdisambig $year)}[$format $media $bitdepth-$my_samplerate] [$catalognum]/%if{$multidisc,Disc $disc-}/$track-$title
-    ext:log: $albumpath/$artist - $album
-    ext:cue: $albumpath/$artist - $album
-    ext:jpg: $albumpath/cover
+#    ext:log: $albumpath/$artist - $album
+#    ext:cue: $albumpath/$artist - $album
+#    ext:jpg: $albumpath/cover
     
 # replace special characters in generated filenames
 replace:
