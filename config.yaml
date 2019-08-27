@@ -167,6 +167,7 @@ extrafiles:
     paths:
         image: $albumpath/ORIGINAL - $filename
         scans: $albumpath/Scans
+        other: $albumpath/Other
 
     
 # Miscellaneous -------------------------------------------------------------
