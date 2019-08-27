@@ -144,15 +144,29 @@ scrub:
 # https://pypi.org/project/beets-extrafiles/
 extrafiles:
     patterns:
-        all: '*.*'
-        artworkdir:
-          - '[sS]cans/'
-          - '[aA]rtwork/'
-          - '[aA]rt/'
+        image:
+            - '*.[jJ][pP][gG]'
+            - '*.[pP][nN][gG]'
+            - '*.[jJ][pP][eE][gG]'
+        other:
+            - '*.[cC][uU][eE]'
+            - '*.[lL][oO][gG]'
+            - '*.[tT][xX][tT]'
+            - '*.[sS][fF][vV]'
+            - '*.[mM]3[uU]'
+            - '*.[mM]3[uU]8'
+            - '*.[nN][fF][oO]'
+            - '*.[pP][dD][fF]'
+            - '*.[mM][dD]5'
+            - '*.[pP][lL][sS]'
+            - '*.[aA][cC][cC][uU]*'
+        scans:
+            - '[sS][cC][aA][nN]*/'
+        folders:
+            - '[!sS][!cC][!aA][!nN]*/'
     paths:
-        artworkdir: $albumpath/Artwork
-        ext:log: $albumpath/Data/
-        ext:cue: $albumpath/Data/
+        image: $albumpath/ORIGINAL - $filename
+        scans: $albumpath/Scans
 
     
 # Miscellaneous -------------------------------------------------------------
