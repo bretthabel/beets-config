@@ -1,8 +1,8 @@
 # beets-config ----------------------------------------------------------------------
 # https://github.com/bretthabel/beets-config/blob/master/config.yaml
 # beets version 1.4.9
-# python version 3.7.3
-# brett habel 20190827
+# python version 3.7.4
+# brett habel 20190829
 # update dependancies: pip install -U beets[fetchart,discogs,import]
 
 # Library----------------------------------------------------------------------------
