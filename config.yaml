@@ -3,7 +3,7 @@
 # beets version 1.4.9
 # python version 3.7.4
 # brett habel 20190829
-# update dependancies: pip install -U beets[fetchart,discogs,import]
+# update dependancies: pip install -U beets[fetchart,discogs,import,extrafiles]
 
 # Library----------------------------------------------------------------------------
 #library: /library.db
@@ -47,9 +47,6 @@ ignore_hidden: yes
 # output example: Shellac / 1000 Hurts (2000) [FLAC Vinyl 24-96] [TG211] / 01 - Prayer To God.flac
 paths:
     default: $albumartist/$album (%if{$original_year,$original_year}) %aunique{albumartist album year, albumtype label catalognum albumdisambig}%if{$albumdisambig,($albumdisambig $year)}[$format $media $bitdepth-$my_samplerate] [$catalognum]/%if{$multidisc,Disc $disc-}/$track-$title
-#    ext:log: $albumpath/$artist - $album
-#    ext:cue: $albumpath/$artist - $album
-#    ext:jpg: $albumpath/cover
     
 # replace special characters in generated filenames
 replace:
@@ -165,8 +162,8 @@ extrafiles:
         folders: $albumpath/Artwork
         image: $albumpath/Artwork/Artwork
         scans: $albumpath/Artwork/Artwork
-        log: $albumpath/Other/$artist - $album
-        cue: $albumpath/Other/$artist - $album
+        log: $albumpath/$artist - $album
+        cue: $albumpath/$artist - $album
         other: $albumpath/Other/
 
     
