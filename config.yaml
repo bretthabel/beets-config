@@ -47,7 +47,7 @@ ignore_hidden: yes
 # output example: Shellac / 1000 Hurts (2000) [FLAC CD 16-44] [TG211CD] / 01 - Prayer To God.flac
 # output example: Shellac / 1000 Hurts (2000) [FLAC Vinyl 24-96] [TG211] / 01 - Prayer To God.flac
 paths:
-    default: $albumartist/$album (%if{$original_year,$original_year}) %aunique{albumartist album year, albumtype label catalognum albumdisambig}%if{$albumdisambig,($albumdisambig $year)}[$format $media $bitdepth-$my_samplerate] [$catalognum]/%if{$multidisc,Disc $disc-}/$track-$title
+    default: $albumartist/$album (%if{$original_year,$original_year}) %aunique{albumartist album year, albumtype label catalognum albumdisambig}%if{$albumdisambig,($albumdisambig $year)}[$format $my_media $bitdepth-$my_samplerate] [$catalognum]/%if{$multidisc,Disc $disc}/$track-$title
     
 # replace special characters in generated filenames
 replace:
@@ -129,7 +129,7 @@ fetchart:
     minwidth: 750
     maxwidth: 2000
     enforce_ratio: yes
-    sources: coverart itunes amazon albumart filesystem google
+    sources: filesystem coverart itunes amazon albumart google
     
 scrub:
     auto: yes
@@ -138,9 +138,9 @@ scrub:
 extrafiles:
     patterns:
         folders:
-          - '[sS]cans/'
-          - '[aA]rtwork/'
-          - '[aA]rt/'
+          - '*[sS]cans/'
+          - '*[aA]rtwork/'
+          - '*[aA]rt/'
         image:
             - '*.[jJ][pP][gG]'
             - '*.[pP][nN][gG]'
@@ -171,6 +171,10 @@ extrafiles:
 item_fields:
     my_samplerate: str(int(samplerate / 1000))
     multidisc: 1 if disctotal > 1 else 0
+    my_media: |
+        if 'Digital' in media or 'File' in media: return 'WEB'
+        if 'Vinyl' in media: return 'Vinyl'
+        else: return media
     
 album_fields:  
     format: |
