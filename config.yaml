@@ -2,7 +2,8 @@
 # https://github.com/bretthabel/beets-config/blob/master/config.yaml
 # beets version 1.4.9
 # python version 3.7.4
-# brett habel 20190829
+# brett habel 20190830
+#
 # update dependancies: pip install -U beets[fetchart,discogs,import,extrafiles]
 
 # Library----------------------------------------------------------------------------
@@ -146,10 +147,9 @@ extrafiles:
             - '*.[jJ][pP][eE][gG]'
         scans:
             - '[sS][cC][aA][nN]*/'
-        cue:
+        log+cue:
             - '*.[cC][uU][eE]'
-        log:
-            - '*.[lL][oO][gG]'
+            - '*.[lL][oO][gG]'            
         other:
             - '*.[tT][xX][tT]'
             - '*.[sS][fF][vV]'
@@ -162,9 +162,8 @@ extrafiles:
         folders: $albumpath/Artwork
         image: $albumpath/Artwork/Artwork
         scans: $albumpath/Artwork/Artwork
-        log: $albumpath/$artist - $album
-        cue: $albumpath/$artist - $album
-        other: $albumpath/Other/
+        log+cue: $albumpath/$artist - $album
+        other: $albumpath/Other/$artist - $album
 
     
 # Miscellaneous -------------------------------------------------------------
