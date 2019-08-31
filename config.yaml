@@ -7,7 +7,7 @@
 # update dependancies: pip install -U beets[fetchart,discogs,import,extrafiles]
 
 # Library----------------------------------------------------------------------------
-#library: /library.db
+library: /Users/bretthabel/Library/Containers/nz.co.pixeleyes.AutoMounter/Data/Mounts/monoNAS/SMB/Music/library.db
 directory: /Users/bretthabel/Library/Containers/nz.co.pixeleyes.AutoMounter/Data/Mounts/monoNAS/SMB/Music
 
 # Importing--------------------------------------------------------------------------
@@ -31,7 +31,7 @@ import:
     quiet: no
     
     #logging
-    log: beetslog.log
+    log: /Users/bretthabel/Library/Containers/nz.co.pixeleyes.AutoMounter/Data/Mounts/monoNAS/SMB/Music/beetslog.log
 
 # files matching these patterns are deleted from source after import
 clutter: ["Thumbs.DB", ".DS_Store", "*.m3u", ".pls"]
