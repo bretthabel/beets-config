@@ -47,7 +47,7 @@ ignore_hidden: yes
 # output example: Shellac / 1000 Hurts (2000) [FLAC CD 16-44] [TG211CD] / 01 - Prayer To God.flac
 # output example: Shellac / 1000 Hurts (2000) [FLAC Vinyl 24-96] [TG211] / 01 - Prayer To God.flac
 paths:
-    default: $albumartist/$album (%if{$original_year,$original_year}) %aunique{albumartist album year, albumtype label catalognum albumdisambig}%if{$albumdisambig,($albumdisambig $year)}[$format $my_media $bitdepth-$my_samplerate] [$catalognum]/%if{$multidisc,Disc $disc}/$track-$title
+    default: %the{$albumartist}/$album ($year) %aunique{albumartist album year, albumtype label catalognum albumdisambig}%if{$albumdisambig,($albumdisambig $year)}[$format $my_media $bitdepth-$my_samplerate] [$catalognum]/%if{$multidisc,Disc $disc}/$track-$title
     
 # replace special characters in generated filenames
 replace:
@@ -118,7 +118,7 @@ match:
 
 # Plugins --------------------------------------------------------------------
 
-plugins: discogs inline extrafiles fetchart scrub
+plugins: discogs inline extrafiles fetchart scrub the info
 pluginpath: []
 
 
